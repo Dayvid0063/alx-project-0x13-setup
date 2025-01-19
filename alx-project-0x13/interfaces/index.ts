@@ -4,16 +4,6 @@ export interface ReactComponentProps {
     children: ReactNode
 }
 
-// Response type
-export interface APIResponse {
-  message: string;
-}
-
-// For the request body
-export interface RequestBody {
-    prompt: string;
-}
-
 export interface GeneratedImageProps {
     imageUrl: string
     prompt: string

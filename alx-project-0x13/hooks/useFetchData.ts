@@ -1,14 +1,13 @@
-import { ImageProps, RequestBody } from "@/interfaces";
+import { ImageProps } from "@/interfaces";
 import { useState } from "react";
 
-
-const useFetchData = <T>() => {
+const useFetchData = <T, R>() => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [responseData, setResponseData] = useState<T | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [generatedImages, setGeneratedImages] = useState<ImageProps[]>([]);
 
-    const fetchData = async (endpoint: string, body: RequestBody) => {
+    const fetchData = async (endpoint: string, body: R) => {
         setIsLoading(true);
         setError(null);
         try {
@@ -24,13 +23,13 @@ const useFetchData = <T>() => {
                 throw new Error('Failed to fetch data');
             }
 
-            const result = await resp.json();
-            setResponseData(result);
-            setGeneratedImages((prev) => [...prev, { imageUrl: result?.message, prompt: body.prompt }]);
+            const result = await resp.json()
+            setResponseData(result)
+            setGeneratedImages((prev) => [...prev, { imageUrl: result?.message, prompt: body?.prompt }])
         } catch (err) {
-            setError((err as Error).message);
+            setError((err as Error).message)
         } finally {
-            setIsLoading(false);
+            setIsLoading(false)
         }
     }
 
@@ -42,5 +41,6 @@ const useFetchData = <T>() => {
         generatedImages
     }
 }
+
 
 export default useFetchData;

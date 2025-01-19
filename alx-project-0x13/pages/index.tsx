@@ -1,23 +1,25 @@
 import ImageCard from "@/components/common/ImageCard";
 import useFetchData from "@/hooks/useFetchData";
-import { ImageProps, APIResponse } from "@/interfaces";
+import { ImageProps } from "@/interfaces";
 import React, { useEffect, useState } from "react";
-
 
 const Home: React.FC = () => {
   const [prompt, setPrompt] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
-  const { isLoading, responseData, generatedImages, fetchData } = useFetchData<APIResponse>();
+  const { isLoading, responseData, generatedImages, fetchData } = useFetchData<any, { prompt: string }>();
 
   const handleGenerateImage = () => {
     fetchData('/api/generate-image', { prompt })
   }
 
+
   useEffect(() => {
     if (!isLoading) {
-      setImageUrl(responseData?.message || "")
+      setImageUrl(responseData?.message)
     }
-  }, [isLoading, responseData])
+  }, [isLoading])
+
+
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
@@ -66,6 +68,7 @@ const Home: React.FC = () => {
               )}
             </div>
           </div>
+
         ) : ""
       }
     </div>
